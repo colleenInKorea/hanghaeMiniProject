@@ -3,6 +3,7 @@ package com.sparta.hanghaeminiproject.service;
 import com.sparta.hanghaeminiproject.dto.LoginRequestDto;
 import com.sparta.hanghaeminiproject.dto.SignupRequestDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
+import com.sparta.hanghaeminiproject.dto.UserRequestDto;
 import com.sparta.hanghaeminiproject.entity.User;
 import com.sparta.hanghaeminiproject.jwt.JwtUtil;
 import com.sparta.hanghaeminiproject.repository.UserRepository;
@@ -59,4 +60,19 @@ public class UserService {
                 .body(StatusResponseDto.success("sucess login!"));
     }
 
+    @Transactional
+    public StatusResponseDto<String> update(UserRequestDto requestDto) {
+        String username = requestDto.getUsername();
+        String introduction = requestDto.getIntroduction();
+        String part = requestDto.getPart();
+
+        //check user info
+        User user = userRepository.findByUsername(username).orElseThrow(
+                ()-> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
+        );
+
+        user.update(part, introduction);
+        return StatusResponseDto.success("회원정보 변경 완료");
+
+    }
 }
