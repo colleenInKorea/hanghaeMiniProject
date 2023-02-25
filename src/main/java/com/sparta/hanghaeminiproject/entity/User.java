@@ -41,7 +41,9 @@ public class User {
     @Builder
     public User (SignupRequestDto requestDto){
         this.nickname = requestDto.getNickname();
-
+        this.username = requestDto.getUsername();
+        this.password = requestDto.getPassword();
+        role = requestDto.isAdminCheck() ? UserRoleEnum.ADMIN : UserRoleEnum.USER;
     }
 
 
