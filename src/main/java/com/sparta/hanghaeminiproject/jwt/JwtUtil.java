@@ -88,7 +88,8 @@ public class JwtUtil {
     }
 
     public Authentication createAuthentication(String username) {
-        UserDetails userDetails = userDetailsService .loadUserByUsername(username);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
+}
 
