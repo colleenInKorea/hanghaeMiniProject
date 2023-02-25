@@ -1,7 +1,9 @@
 package com.sparta.hanghaeminiproject.controller;
 
+import com.sparta.hanghaeminiproject.dto.LoginRequestDto;
 import com.sparta.hanghaeminiproject.dto.SignupRequestDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
+import com.sparta.hanghaeminiproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
