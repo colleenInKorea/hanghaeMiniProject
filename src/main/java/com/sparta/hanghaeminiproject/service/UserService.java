@@ -5,8 +5,10 @@ import com.sparta.hanghaeminiproject.dto.SignupRequestDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
 import com.sparta.hanghaeminiproject.dto.UserRequestDto;
 import com.sparta.hanghaeminiproject.entity.User;
+import com.sparta.hanghaeminiproject.entity.UserRoleEnum;
 import com.sparta.hanghaeminiproject.jwt.JwtUtil;
 import com.sparta.hanghaeminiproject.repository.UserRepository;
+import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +63,7 @@ public class UserService {
     }
 
     @Transactional
-    public StatusResponseDto<String> update(UserRequestDto requestDto) {
+    public StatusResponseDto<String> update(UserRequestDto requestDto, UserDetailsImpl userDetails) {
         String username = requestDto.getUsername();
         String introduction = requestDto.getIntroduction();
         String part = requestDto.getPart();
@@ -71,8 +73,14 @@ public class UserService {
                 ()-> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
         );
 
-        user.update(part, introduction);
-        return StatusResponseDto.success("회원정보 변경 완료");
+        if (user.getRole() == UserRoleEnum.ADMIN || user.getUsername().equals(userDetails.getUser().getUsername())){
+            user.update(part, introduction);
+            return StatusResponseDto.success("회원정보 변경 완료");
+        }else {
+            throw new IllegalArgumentException("해당 유저만 수정가능합니다.");
+        }
+
+
 
     }
 }

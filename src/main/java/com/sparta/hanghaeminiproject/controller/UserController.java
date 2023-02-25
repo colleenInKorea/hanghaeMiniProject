@@ -4,9 +4,11 @@ import com.sparta.hanghaeminiproject.dto.LoginRequestDto;
 import com.sparta.hanghaeminiproject.dto.SignupRequestDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
 import com.sparta.hanghaeminiproject.dto.UserRequestDto;
+import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import com.sparta.hanghaeminiproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +34,7 @@ public class UserController {
 
     @ResponseBody
     @PutMapping("/edit")
-    public  StatusResponseDto<String> update(@RequestBody UserRequestDto requestDto){
-        return userService.update(requestDto);
+    public  StatusResponseDto<String> update(@RequestBody UserRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return userService.update(requestDto, userDetails);
     }
 }
