@@ -5,6 +5,7 @@ import com.sparta.hanghaeminiproject.dto.SignupRequestDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
 import com.sparta.hanghaeminiproject.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/login")
-    public StatusResponseDto<String> login(@RequestBody LoginRequestDto loginRequestDto){
+    public ResponseEntity<StatusResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto){
         return userService.login(loginRequestDto);
     }
 }

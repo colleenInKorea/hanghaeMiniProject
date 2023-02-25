@@ -7,6 +7,7 @@ import com.sparta.hanghaeminiproject.entity.User;
 import com.sparta.hanghaeminiproject.jwt.JwtUtil;
 import com.sparta.hanghaeminiproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,7 @@ public class UserService {
     }
 
     //    @Transactional(readOnly = true)
-    public StatusResponseDto<String> login(LoginRequestDto loginRequestDto) {
+    public ResponseEntity<StatusResponseDto<String>> login(LoginRequestDto loginRequestDto) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -48,7 +49,12 @@ public class UserService {
         if (!user.getPassword().equals(password)){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        return StatusResponseDto.success(jwtUtil.createToken(user.getUsername(), user.getRole()));
+
+        String token = jwtUtil.createToken(user.getUsername(), user.getRole());
+
+        return ResponseEntity.ok()
+                .header(token)
+                .body(StatusResponseDto.success("sucess login!"));
     }
 
 }
