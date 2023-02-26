@@ -1,19 +1,17 @@
 package com.sparta.hanghaeminiproject.controller;
 
-import com.sparta.hanghaeminiproject.dto.LoginRequestDto;
-import com.sparta.hanghaeminiproject.dto.SignupRequestDto;
-import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
+import com.sparta.hanghaeminiproject.dto.*;
+import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import com.sparta.hanghaeminiproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -31,4 +29,18 @@ public class UserController {
     public ResponseEntity<StatusResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto){
         return userService.login(loginRequestDto);
     }
+
+    @ResponseBody
+    @PutMapping("/{userId}")
+    public  StatusResponseDto<String> update(@PathVariable Long userId, @RequestBody UserRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return userService.update(userId, requestDto, userDetails);
+    }
+
+    @ResponseBody
+    @GetMapping ("/{userId}")
+    public StatusResponseDto<UserResponseDto> getUserInfo(@PathVariable Long userId){
+        return userService.getUserInfo(userId);
+    }
+
+
 }
