@@ -54,4 +54,20 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration config = new CorsConfiguration();
+//
+//        config.addAllowedOrigin("http://localhost:3000");
+//        config.addExposedHeader(JwtUtil.AUTHORIZATION_HEADER);
+//        config.addAllowedMethod("*");
+//        config.addAllowedHeader("*");
+//        config.setAllowCredentials(true);
+//        config.validateAllowCredentials();
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", config);
+//
+//        return source;
+//    }
 }

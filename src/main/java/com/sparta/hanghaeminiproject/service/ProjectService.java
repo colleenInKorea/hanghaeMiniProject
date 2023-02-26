@@ -35,6 +35,7 @@ public class ProjectService {
     //프로젝트 생성하기
     public StatusResponseDto<ProjectResponseDto> createdProject(ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails){
         Project project = new Project(projectRequestDto, userDetails.getUser());
+
         projectRepository.save(project);
         return StatusResponseDto.success(new ProjectResponseDto(project));
     }

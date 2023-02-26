@@ -50,9 +50,9 @@ public class Project extends Timestamped {
 //            joinColumns = @JoinColumn(name = "project_id"),
 //            inverseJoinColumns = @JoinColumn(name = "")
 //    )
-//    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-//    @OrderBy("createdAt desc")
-//    List<Comment> commentList = new ArrayList<>();
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("createdAt desc")
+    List<Comment> commentList = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 //    List<ProjectLike> likes = new ArrayList<>();
@@ -62,7 +62,7 @@ public class Project extends Timestamped {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContent();
         this.image = requestDto.getImage();
-//        this.stacks = requestDto.getStacks();
+        this.stacks = requestDto.getStacks();
         this.frontEndMember = requestDto.getFrontEndMember();
         this.backEndMember = requestDto.getBackEndMember();
         this.user = user;
@@ -72,7 +72,7 @@ public class Project extends Timestamped {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContent();
         this.image = requestDto.getImage();
-//        this.stacks = requestDto.getStacks();
+        this.stacks = requestDto.getStacks();
         this.frontEndMember = requestDto.getFrontEndMember();
         this.backEndMember = requestDto.getBackEndMember();
     }

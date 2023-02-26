@@ -1,4 +1,4 @@
-package com.sparta.hanghaeminiproject.config;
+package com.sparta.hanghaeminiproject.s3;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

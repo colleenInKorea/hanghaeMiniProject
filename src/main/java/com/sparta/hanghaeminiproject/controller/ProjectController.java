@@ -5,7 +5,7 @@ import com.sparta.hanghaeminiproject.dto.ProjectResponseDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
 import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import com.sparta.hanghaeminiproject.service.ProjectService;
-import com.sparta.hanghaeminiproject.service.S3UploaderService;
+import com.sparta.hanghaeminiproject.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProjectController {
 
-    private final S3UploaderService s3UploaderService;
+    private final S3Uploader s3Uploader;
     private final ProjectService projectService;
 
 //  전체 프로젝트 확인
@@ -53,7 +53,7 @@ public class ProjectController {
     }
 
     @PostMapping("/post")
-    public String postImg (@RequestPart(value = "img", required = false) MultipartFile multipartFile) throws IOException {
-        return s3UploaderService.uploadFiles(multipartFile, "버킷 폴더이름");
+    public String postImg (@RequestParam(value = "img") MultipartFile multipartFile) throws IOException {
+        return s3Uploader.uploadFiles(multipartFile, "버킷 폴더이름");
     }
 }

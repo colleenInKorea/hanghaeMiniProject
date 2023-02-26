@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "comment")
 public class Comment extends Timestamped{
 

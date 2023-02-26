@@ -36,11 +36,11 @@ public class ProjectResponseDto {
         this.image = project.getImage();
         this.backEndMember = project.getBackEndMember();
         this.frontEndMember = project.getFrontEndMember();
-//        this.stacks = project.getStacks();
+        this.stacks = project.getStacks();
         this.createdAt = project.getCreatedAt();
         this.modifiedAt = project.getModifiedAt();
-//        for (Comment comment: project.getComments()){
-//            this.commentResponseDtos.add(CommentResponseDto.from(comment));
-//        }
+        for (Comment comment: project.getCommentList()){
+            this.commentResponseDtos.add(CommentResponseDto.from(comment));
+        }
     }
 }

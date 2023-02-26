@@ -1,4 +1,4 @@
-package com.sparta.hanghaeminiproject.service;
+package com.sparta.hanghaeminiproject.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class S3UploaderService {
+public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
