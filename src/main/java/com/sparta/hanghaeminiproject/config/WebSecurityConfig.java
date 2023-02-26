@@ -1,14 +1,18 @@
 package com.sparta.hanghaeminiproject.config;
 
+import com.sparta.hanghaeminiproject.entity.User;
 import com.sparta.hanghaeminiproject.jwt.JwtAuthFilter;
 import com.sparta.hanghaeminiproject.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,11 +23,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.awt.desktop.UserSessionListener;
+
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
 @EnableGlobalMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
-public class WebSecurityConfig {
+public class WebSecurityConfig  {
 
     private final JwtUtil jwtUtil;
 //    private final Users users;
@@ -51,7 +57,7 @@ public class WebSecurityConfig {
         http.cors();
 
         http.authorizeRequests().antMatchers("/api/user/**").permitAll()
-                .antMatchers("/board/**").permitAll()
+                .antMatchers("**/project/**").permitAll()
 //              .antMatchers("/api/shop").permitAll()
                 .anyRequest().authenticated()
                 // JWT 인증/인가를 사용하기 위한 설정
@@ -76,5 +82,6 @@ public class WebSecurityConfig {
 
         return source;
     }
+
 
 }

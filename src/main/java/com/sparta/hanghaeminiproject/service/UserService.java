@@ -1,9 +1,6 @@
 package com.sparta.hanghaeminiproject.service;
 
-import com.sparta.hanghaeminiproject.dto.LoginRequestDto;
-import com.sparta.hanghaeminiproject.dto.SignupRequestDto;
-import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
-import com.sparta.hanghaeminiproject.dto.UserRequestDto;
+import com.sparta.hanghaeminiproject.dto.*;
 import com.sparta.hanghaeminiproject.entity.User;
 import com.sparta.hanghaeminiproject.entity.UserRoleEnum;
 import com.sparta.hanghaeminiproject.jwt.JwtUtil;
@@ -66,13 +63,12 @@ public class UserService {
 
     //회원 정보 수정
     @Transactional
-    public StatusResponseDto<String> update(UserRequestDto requestDto, UserDetailsImpl userDetails) {
-        String username = requestDto.getUsername();
+    public StatusResponseDto<String> update(Long userId, UserRequestDto requestDto, UserDetailsImpl userDetails) {
         String introduction = requestDto.getIntroduction();
         String part = requestDto.getPart();
 
         //check user info
-        User user = userRepository.findByUsername(username).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 ()-> new IllegalArgumentException("해당 유저가 존재하지 않습니다.")
         );
 
@@ -82,8 +78,13 @@ public class UserService {
         }else {
             throw new IllegalArgumentException("해당 유저만 수정가능합니다.");
         }
+    }
 
-
-
+    @Transactional(readOnly = true)
+    public StatusResponseDto<UserResponseDto> getUserInfo(Long userId){
+        UserResponseDto userResponseDto = new UserResponseDto(userRepository.findById(userId).orElseThrow(
+                ()-> new IllegalArgumentException("can not find userInfo")
+        ));
+        return StatusResponseDto.success(userResponseDto);
     }
 }
