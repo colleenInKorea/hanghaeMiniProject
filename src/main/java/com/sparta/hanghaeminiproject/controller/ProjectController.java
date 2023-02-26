@@ -1,5 +1,6 @@
 package com.sparta.hanghaeminiproject.controller;
 
+import com.sparta.hanghaeminiproject.dto.ProjectOneResponseDto;
 import com.sparta.hanghaeminiproject.dto.ProjectRequestDto;
 import com.sparta.hanghaeminiproject.dto.ProjectResponseDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
@@ -24,7 +25,7 @@ public class ProjectController {
 
     //  전체 프로젝트 확인
     @GetMapping("/project")
-    public StatusResponseDto<List<ProjectResponseDto>> getProjects() {
+    public StatusResponseDto<List<ProjectOneResponseDto>> getProjects() {
         return projectService.findProjects();
     }
 
