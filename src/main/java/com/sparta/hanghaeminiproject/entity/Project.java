@@ -38,6 +38,9 @@ public class Project extends Timestamped {
     private int frontEndMember;
 
     @ElementCollection
+    @CollectionTable(name = "project_stacks",
+        joinColumns = @JoinColumn(name = "project_id"))
+    @Column(name = "stack_name")
     List<String> stacks = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
