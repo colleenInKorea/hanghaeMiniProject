@@ -26,7 +26,7 @@ public class Project extends Timestamped {
     private String contents;
 
     @Column(nullable = true)
-    private String image;
+    private String imageUrl;
 
 //    @Column(nullable = false)
 //    List<String> stacks = new ArrayList<>();
@@ -61,20 +61,20 @@ public class Project extends Timestamped {
 //    List<ProjectLike> likes = new ArrayList<>();
 
     @Builder
-    public Project(ProjectRequestDto requestDto, User user) {
+    public Project(ProjectRequestDto requestDto, User user, String imageUrl) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContent();
-        this.image = requestDto.getImage();
+        this.imageUrl = imageUrl;
         this.stacks = requestDto.getStacks();
         this.frontEndMember = requestDto.getFrontEndMember();
         this.backEndMember = requestDto.getBackEndMember();
         this.user = user;
     }
 
-    public void update(ProjectRequestDto requestDto) {
+    public void update(ProjectRequestDto requestDto, String imageUrl) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContent();
-        this.image = requestDto.getImage();
+        this.imageUrl = imageUrl;
         this.stacks = requestDto.getStacks();
         this.frontEndMember = requestDto.getFrontEndMember();
         this.backEndMember = requestDto.getBackEndMember();

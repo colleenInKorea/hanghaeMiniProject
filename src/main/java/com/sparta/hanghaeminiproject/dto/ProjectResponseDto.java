@@ -16,7 +16,7 @@ public class ProjectResponseDto {
     private String title;
     private String username;
     private String content;
-    private String image;
+    private String imageUrl;
     private int backEndMember;
 
     private int frontEndMember;
@@ -33,7 +33,7 @@ public class ProjectResponseDto {
         this.title = project.getTitle();
         this.username = project.getUser().getUsername();
         this.content = project.getContents();
-        this.image = project.getImage();
+        this.imageUrl = project.getImageUrl();
         this.backEndMember = project.getBackEndMember();
         this.frontEndMember = project.getFrontEndMember();
         this.stacks = project.getStacks();

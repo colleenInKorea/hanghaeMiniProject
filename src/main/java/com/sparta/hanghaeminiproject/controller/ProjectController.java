@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProjectController {
 
-    private final S3Uploader s3Uploader;
     private final ProjectService projectService;
 
 //  전체 프로젝트 확인
@@ -31,7 +30,14 @@ public class ProjectController {
 
 //  프로젝트 등록
     @PostMapping("/project")
-    public StatusResponseDto<ProjectResponseDto> createdProject(@RequestBody ProjectRequestDto projectRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public StatusResponseDto<ProjectResponseDto> createdProject(@RequestParam(value = "title") String title,
+                                                                @RequestParam(value = "content") String content,
+                                                                @RequestParam(value = "backEndMember") int backEndMember,
+                                                                @RequestParam(value = "frontEndMember") int frontEndMember,
+                                                                @RequestParam(value = "stacks") List<String> stacks,
+                                                                @RequestParam(value = "image") MultipartFile multipartFile,
+                                                                @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto(title, content, multipartFile, backEndMember, frontEndMember, stacks);
         return projectService.createdProject(projectRequestDto, userDetails);
     }
 
@@ -43,7 +49,15 @@ public class ProjectController {
 
     //선택 프로젝트 수정
     @PutMapping("/project/{projectId}")
-    public StatusResponseDto<ProjectResponseDto> updateProject(@PathVariable Long projectId, @RequestBody ProjectRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public StatusResponseDto<ProjectResponseDto> updateProject(@PathVariable Long projectId,
+                                                               @RequestParam(value = "title") String title,
+                                                               @RequestParam(value = "content") String content,
+                                                               @RequestParam(value = "backEndMember") int backEndMember,
+                                                               @RequestParam(value = "frontEndMember") int frontEndMember,
+                                                               @RequestParam(value = "stacks") List<String> stacks,
+                                                               @RequestParam(value = "image") MultipartFile multipartFile,
+                                                               @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+        ProjectRequestDto requestDto = new ProjectRequestDto(title, content, multipartFile, backEndMember, frontEndMember, stacks);
         return projectService.updateProject(projectId, requestDto, userDetails);
     }
 
@@ -53,8 +67,8 @@ public class ProjectController {
         return projectService.removeProject(projectId, userDetails);
     }
 
-    @PostMapping("/post")
-    public String postImg (@RequestParam(value = "img") MultipartFile multipartFile) throws IOException {
-        return s3Uploader.uploadFiles(multipartFile, "버킷 폴더이름");
-    }
+//    @PostMapping("/post")
+//    public String postImg (@RequestParam(value = "img") MultipartFile multipartFile) throws IOException {
+//        return s3Uploader.uploadFiles(multipartFile, "버킷 폴더이름");
+//    }
 }

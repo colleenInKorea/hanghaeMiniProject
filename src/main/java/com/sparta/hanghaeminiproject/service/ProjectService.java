@@ -7,11 +7,13 @@ import com.sparta.hanghaeminiproject.entity.Project;
 import com.sparta.hanghaeminiproject.entity.User;
 import com.sparta.hanghaeminiproject.entity.UserRoleEnum;
 import com.sparta.hanghaeminiproject.repository.ProjectRepository;
+import com.sparta.hanghaeminiproject.s3.S3Uploader;
 import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,8 @@ import java.util.Optional;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+
+    private final S3Uploader s3Uploader;
 
     //전체 프로젝트 조회
     public StatusResponseDto<List<ProjectResponseDto>> findProjects(){
@@ -33,8 +37,9 @@ public class ProjectService {
     }
 
     //프로젝트 생성하기
-    public StatusResponseDto<ProjectResponseDto> createdProject(ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails){
-        Project project = new Project(projectRequestDto, userDetails.getUser());
+    public StatusResponseDto<ProjectResponseDto> createdProject( ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails) throws IOException {
+        String imageUrl = s3Uploader.uploadFiles(projectRequestDto.getMultipartFile(), "images");
+        Project project = new Project(projectRequestDto, userDetails.getUser(), imageUrl);
 
         projectRepository.save(project);
         return StatusResponseDto.success(new ProjectResponseDto(project));
@@ -50,13 +55,14 @@ public class ProjectService {
 
     //선택 프로젝트 수정
     @Transactional
-    public StatusResponseDto<ProjectResponseDto> updateProject(Long projectId, ProjectRequestDto requestDto, UserDetailsImpl userDetails){
+    public StatusResponseDto<ProjectResponseDto> updateProject(Long projectId, ProjectRequestDto requestDto, UserDetailsImpl userDetails) throws IOException {
         User user = userDetails.getUser();
+        String imageUrl = s3Uploader.uploadFiles(requestDto.getMultipartFile(), "images");
         Project project = projectRepository.findById(projectId).orElseThrow(
                 ()-> new IllegalArgumentException("It doesn't exist this project")
         );
         if (user.getRole() == UserRoleEnum.ADMIN || user.getUsername().equals(project.getUser().getUsername())){
-            project.update(requestDto);
+            project.update(requestDto, imageUrl);
             return StatusResponseDto.success(new ProjectResponseDto(project));
         }else {
             throw  new IllegalArgumentException("작성자만 수정가능합니다.");

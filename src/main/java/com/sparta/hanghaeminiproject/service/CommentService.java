@@ -26,7 +26,7 @@ public class CommentService {
 
     @Transactional
     public StatusResponseDto<CommentResponseDto> createComment(Long id, String content, UserDetailsImpl userDetails) {
-
+// id는 프로젝트 아이디입니다.
         Project project = projectRepository.findById(id).orElseThrow(() -> new NullPointerException("등록되지 않은 게시글입니다."));
         Comment comment = new Comment(userDetails.getUser(), project, content);
         commentRepository.save(comment);
