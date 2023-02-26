@@ -37,4 +37,6 @@ public class UserController {
     public  StatusResponseDto<String> update(@RequestBody UserRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return userService.update(requestDto, userDetails);
     }
+
+
 }

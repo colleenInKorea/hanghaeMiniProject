@@ -24,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private  final JwtUtil jwtUtil;
 
+    //회원 가입
     @Transactional
     public StatusResponseDto<String> signup(SignupRequestDto signupRequestDto) {
         Optional<User> found = userRepository.findByUsername(signupRequestDto.getUsername());
@@ -40,6 +41,7 @@ public class UserService {
         return  StatusResponseDto.success("success SignUp!") ;
     }
 
+    //로그인
     //    @Transactional(readOnly = true)
     public ResponseEntity<StatusResponseDto<String>> login(LoginRequestDto loginRequestDto) {
         String username = loginRequestDto.getUsername();
@@ -62,6 +64,7 @@ public class UserService {
                 .body(StatusResponseDto.success("sucess login!"));
     }
 
+    //회원 정보 수정
     @Transactional
     public StatusResponseDto<String> update(UserRequestDto requestDto, UserDetailsImpl userDetails) {
         String username = requestDto.getUsername();

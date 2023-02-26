@@ -30,14 +30,13 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        // h2-console 사용 및 resources 접근 허용 설정
-//        return (web) -> web.ignoring()
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        // h2-console 사용 및 resources 접근 허용 설정
+        return (web) -> web.ignoring()
 //                .requestMatchers(PathRequest.)
-//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//    }
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
