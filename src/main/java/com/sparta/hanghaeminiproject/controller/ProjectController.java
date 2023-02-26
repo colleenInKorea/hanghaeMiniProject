@@ -22,13 +22,13 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-//  전체 프로젝트 확인
+    //  전체 프로젝트 확인
     @GetMapping("/project")
-    public StatusResponseDto<List<ProjectResponseDto>> getProjects(){
+    public StatusResponseDto<List<ProjectResponseDto>> getProjects() {
         return projectService.findProjects();
     }
 
-//  프로젝트 등록
+    //  프로젝트 등록
     @PostMapping("/project")
     public StatusResponseDto<ProjectResponseDto> createdProject(@RequestParam(value = "title") String title,
                                                                 @RequestParam(value = "content") String content,
@@ -43,7 +43,7 @@ public class ProjectController {
 
     //선택 프로젝트 확인
     @GetMapping("/project/{projectId}")
-    public StatusResponseDto<ProjectResponseDto> getProject(@PathVariable Long projectId){
+    public StatusResponseDto<ProjectResponseDto> getProject(@PathVariable Long projectId) {
         return projectService.findProject(projectId);
     }
 
@@ -63,12 +63,12 @@ public class ProjectController {
 
     //선택 프로젝트 삭제
     @DeleteMapping("/project/{projectId}")
-    public StatusResponseDto<String> deleteProject(@PathVariable Long projectId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public StatusResponseDto<String> deleteProject(@PathVariable Long projectId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return projectService.removeProject(projectId, userDetails);
     }
 
-//    @PostMapping("/post")
-//    public String postImg (@RequestParam(value = "img") MultipartFile multipartFile) throws IOException {
-//        return s3Uploader.uploadFiles(multipartFile, "버킷 폴더이름");
-//    }
+    @PostMapping("/project/like/{boardId}")
+    public StatusResponseDto<String> likeProject(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return projectService.likeProject(boardId, userDetails);
+    }
 }

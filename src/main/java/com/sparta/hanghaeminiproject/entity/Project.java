@@ -57,8 +57,8 @@ public class Project extends Timestamped {
     @OrderBy("createdAt desc")
     List<Comment> commentList = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
-//    List<ProjectLike> likes = new ArrayList<>();
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    List<ProjectLike> likes = new ArrayList<>();
 
     @Builder
     public Project(ProjectRequestDto requestDto, User user, String imageUrl) {

@@ -20,10 +20,10 @@ public class ProjectResponseDto {
     private int backEndMember;
 
     private int frontEndMember;
-
     private List<String> stacks = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private int likeCount;
 
     private List<CommentResponseDto> commentResponseDtos = new ArrayList<>();
 
@@ -37,6 +37,7 @@ public class ProjectResponseDto {
         this.backEndMember = project.getBackEndMember();
         this.frontEndMember = project.getFrontEndMember();
         this.stacks = project.getStacks();
+        this.likeCount = project.getLikes().size();
         this.createdAt = project.getCreatedAt();
         this.modifiedAt = project.getModifiedAt();
         for (Comment comment: project.getCommentList()){

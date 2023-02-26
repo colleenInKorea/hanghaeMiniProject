@@ -4,8 +4,10 @@ import com.sparta.hanghaeminiproject.dto.ProjectRequestDto;
 import com.sparta.hanghaeminiproject.dto.ProjectResponseDto;
 import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
 import com.sparta.hanghaeminiproject.entity.Project;
+import com.sparta.hanghaeminiproject.entity.ProjectLike;
 import com.sparta.hanghaeminiproject.entity.User;
 import com.sparta.hanghaeminiproject.entity.UserRoleEnum;
+import com.sparta.hanghaeminiproject.repository.ProjectLikeRepository;
 import com.sparta.hanghaeminiproject.repository.ProjectRepository;
 import com.sparta.hanghaeminiproject.s3.S3Uploader;
 import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+
+    private final ProjectLikeRepository projectLikeRepository;
 
     private final S3Uploader s3Uploader;
 
@@ -84,4 +88,19 @@ public class ProjectService {
         return StatusResponseDto.success("delete success");
     }
 
+    //좋아요 만들기
+    public StatusResponseDto<String> likeProject(Long boardId, UserDetailsImpl userDetails) {
+        Project project = projectRepository.findById(boardId).orElseThrow(
+                ()-> new NullPointerException("존재하지 않는 프로젝트입니다.")
+        );
+
+        Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
+        if(projectLike.isPresent()){
+            projectLikeRepository.deleteById((projectLike.get().getId()));
+            return StatusResponseDto.success("해당 프로젝트에 좋아요가 최소 되었습니다.");
+        }
+
+        projectLikeRepository.save(new ProjectLike(project, userDetails.getUser()));
+        return StatusResponseDto.success("해당 프로젝트에 좋아요가 추가 되었습니다.");
+    }
 }
