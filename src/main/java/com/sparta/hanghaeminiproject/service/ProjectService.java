@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,12 +58,19 @@ public class ProjectService {
     }
 
     //선택 프로젝트 조회
-    public StatusResponseDto<ProjectResponseDto> findProject(Long projectId){
+    public StatusResponseDto<ProjectResponseDto> findProject(Long projectId, UserDetailsImpl userDetails){
         ProjectResponseDto projectResponseDto = new ProjectResponseDto(projectRepository.findById(projectId).orElseThrow(
                 ()-> new IllegalArgumentException("Can not find project")
         ));
+        Project project = projectRepository.findById(projectId).orElseThrow(
+                ()-> new EntityNotFoundException("해당 프로젝트를 찾을 수 없습니다.")
+        );
+        Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
 
-        return StatusResponseDto.success(projectResponseDto);
+        if(projectLike.isPresent()){
+            return StatusResponseDto.success(projectResponseDto, true) ;
+        }
+        return StatusResponseDto.success(projectResponseDto, false);
     }
 
     //선택 프로젝트 수정
