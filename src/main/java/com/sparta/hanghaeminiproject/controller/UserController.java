@@ -1,6 +1,7 @@
 package com.sparta.hanghaeminiproject.controller;
 
 import com.sparta.hanghaeminiproject.dto.*;
+import com.sparta.hanghaeminiproject.entity.User;
 import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import com.sparta.hanghaeminiproject.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,13 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/login")
-    public ResponseEntity<StatusResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto){
+    public ResponseEntity<StatusResponseDto<User>> login(@RequestBody LoginRequestDto loginRequestDto){
         return userService.login(loginRequestDto);
     }
 
     @ResponseBody
     @PutMapping("/{userId}")
-    public  StatusResponseDto<String> update(@PathVariable Long userId, @RequestBody UserRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public  StatusResponseDto<User> update(@PathVariable Long userId, @RequestBody UserRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return userService.update(userId, requestDto, userDetails);
     }
 

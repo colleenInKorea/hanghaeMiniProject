@@ -40,7 +40,6 @@ public class ProjectService {
     public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
         List<Project> lists = projectRepository.findAllOrderByModifiedAtDesc();
 //        Collections.sort(lists, Collections.reverseOrder(Comparator.comparing(Project::getModifiedAt)));
-
         List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>();
         for(Project project : lists){
             projectOneResponseDtos.add(ProjectOneResponseDto.of(project));
