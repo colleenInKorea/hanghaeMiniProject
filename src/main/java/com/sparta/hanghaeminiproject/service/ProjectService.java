@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +35,21 @@ public class ProjectService {
 
     private final S3Uploader s3Uploader;
 
-    //전체 프로젝트 조회
-//    public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
-//        List<Project> lists = projectRepository.findAll();
-//        List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>()
-//                .stream()
-//                .map(Project project) -> new ProjectOneResponseDto(project))
-//                .collect(Collectors.toCollection());
-//
-//        return StatusResponseDto.success(projectOneResponseDtos);
-//    }
+
+//    전체 프로젝트 조회
+    public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
+        List<Project> lists = projectRepository.findAllOrderByModifiedAtDesc();
+//        Collections.sort(lists, Collections.reverseOrder(Comparator.comparing(Project::getModifiedAt)));
+
+        List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>();
+        for(Project project : lists){
+            projectOneResponseDtos.add(ProjectOneResponseDto.of(project));
+        }
+        return StatusResponseDto.success(projectOneResponseDtos);
+    }
 
     //프로젝트 생성하기
+    @Transactional
     public StatusResponseDto<ProjectResponseDto> createdProject( ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails) throws IOException {
         String imageUrl = s3Uploader.uploadFiles(projectRequestDto.getMultipartFile(), "images");
         Project project = new Project(projectRequestDto, userDetails.getUser(), imageUrl);
@@ -55,11 +59,19 @@ public class ProjectService {
     }
 
     //선택 프로젝트 조회
-    public StatusResponseDto<ProjectResponseDto> findProject(Long projectId){
+    public StatusResponseDto<ProjectResponseDto> findProject(Long projectId, UserDetailsImpl userDetails){
         ProjectResponseDto projectResponseDto = new ProjectResponseDto(projectRepository.findById(projectId).orElseThrow(
                 ()-> new IllegalArgumentException("Can not find project")
         ));
-        return StatusResponseDto.success(projectResponseDto);
+        Project project = projectRepository.findById(projectId).orElseThrow(
+                ()-> new EntityNotFoundException("해당 프로젝트를 찾을 수 없습니다.")
+        );
+        Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
+
+        if(projectLike.isPresent()){
+            return StatusResponseDto.success(projectResponseDto, true) ;
+        }
+        return StatusResponseDto.success(projectResponseDto, false);
     }
 
     //선택 프로젝트 수정
@@ -79,6 +91,7 @@ public class ProjectService {
     }
 
     // 선택 프로젝트 삭제
+    @Transactional
     public StatusResponseDto<String> removeProject(Long projectId, UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         Project project = projectRepository.findById(projectId).orElseThrow(
@@ -94,6 +107,7 @@ public class ProjectService {
     }
 
     //좋아요 만들기
+    @Transactional
     public StatusResponseDto<String> likeProject(Long boardId, UserDetailsImpl userDetails) {
         Project project = projectRepository.findById(boardId).orElseThrow(
                 ()-> new NullPointerException("존재하지 않는 프로젝트입니다.")
