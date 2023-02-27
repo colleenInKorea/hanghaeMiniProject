@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //import static java.util.stream.Nodes.collect;
@@ -38,7 +36,7 @@ public class ProjectService {
 
 //    전체 프로젝트 조회
     public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
-        List<Project> lists = projectRepository.findAllOrderByModifiedAtDesc();
+        List<Project> lists = projectRepository.findAllByOrderByModifiedAtDesc();
 //        Collections.sort(lists, Collections.reverseOrder(Comparator.comparing(Project::getModifiedAt)));
         List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>();
         for(Project project : lists){
@@ -68,9 +66,9 @@ public class ProjectService {
         Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
 
         if(projectLike.isPresent()){
-            return StatusResponseDto.success(projectResponseDto, true) ;
+            return StatusResponseDto.likeSuccess(projectResponseDto, true) ;
         }
-        return StatusResponseDto.success(projectResponseDto, false);
+        return StatusResponseDto.likeSuccess(projectResponseDto, false);
     }
 
     //선택 프로젝트 수정
@@ -115,10 +113,10 @@ public class ProjectService {
         Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
         if(projectLike.isPresent()){
             projectLikeRepository.deleteById((projectLike.get().getId()));
-            return StatusResponseDto.success("해당 프로젝트에 좋아요가 취소 되었습니다.", false);
+            return StatusResponseDto.likeSuccess("해당 프로젝트에 좋아요가 취소 되었습니다.", false);
         }
 
         projectLikeRepository.save(new ProjectLike(project, userDetails.getUser()));
-        return StatusResponseDto.success("해당 프로젝트에 좋아요가 추가 되었습니다.", true);
+        return StatusResponseDto.likeSuccess("해당 프로젝트에 좋아요가 추가 되었습니다.", true);
     }
 }

@@ -29,7 +29,7 @@ public class StatusResponseDto<T> {
     }
 
     // 좋아요 boolean 리턴용
-    public static <T> StatusResponseDto<T> success(T result, boolean isLike){
+    public static <T> StatusResponseDto<T> likeSuccess(T result, boolean isLike){
         return new StatusResponseDto<>(200, result, isLike);
     }
 
