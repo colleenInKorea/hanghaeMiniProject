@@ -34,16 +34,18 @@ public class ProjectService {
 
     private final S3Uploader s3Uploader;
 
-    //전체 프로젝트 조회
-//    public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
-//        List<Project> lists = projectRepository.findAll();
-//        List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>()
-//                .stream()
-//                .map(Project project) -> new ProjectOneResponseDto(project))
-//                .collect(Collectors.toCollection());
-//
-//        return StatusResponseDto.success(projectOneResponseDtos);
-//    }
+
+//    전체 프로젝트 조회
+    public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
+        List<Project> lists = projectRepository.findAll();
+        List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>();
+        for(Project project : lists){
+            projectOneResponseDtos.add(ProjectOneResponseDto.of(project));
+        }
+
+        return StatusResponseDto.success(projectOneResponseDtos);
+    }
+
 
     //프로젝트 생성하기
     public StatusResponseDto<ProjectResponseDto> createdProject( ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails) throws IOException {
@@ -59,6 +61,7 @@ public class ProjectService {
         ProjectResponseDto projectResponseDto = new ProjectResponseDto(projectRepository.findById(projectId).orElseThrow(
                 ()-> new IllegalArgumentException("Can not find project")
         ));
+
         return StatusResponseDto.success(projectResponseDto);
     }
 

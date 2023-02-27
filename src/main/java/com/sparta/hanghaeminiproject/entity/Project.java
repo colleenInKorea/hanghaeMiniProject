@@ -37,11 +37,14 @@ public class Project extends Timestamped {
     @Column(nullable = true)
     private int frontEndMember;
 
-    @ElementCollection
-    @CollectionTable(name = "project_stacks",
-        joinColumns = @JoinColumn(name = "project_id"))
-    @Column(name = "stack_name")
-    List<String> stacks = new ArrayList<>();
+//    @ElementCollection
+//    @CollectionTable(name = "project_stacks",
+//        joinColumns = @JoinColumn(name = "project_id"))
+//    @Column(name = "stack_name")
+//    List<String> stacks = new ArrayList<>();
+
+    private String backEndStack;
+    private String frontEndStack;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -65,7 +68,9 @@ public class Project extends Timestamped {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContent();
         this.imageUrl = imageUrl;
-        this.stacks = requestDto.getStacks();
+        this.backEndStack = requestDto.getBackEndStack();
+        this.frontEndStack = requestDto.getFrontEndStack();
+//        this.stacks = requestDto.getStacks();
         this.frontEndMember = requestDto.getFrontEndMember();
         this.backEndMember = requestDto.getBackEndMember();
         this.user = user;
@@ -75,7 +80,9 @@ public class Project extends Timestamped {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContent();
         this.imageUrl = imageUrl;
-        this.stacks = requestDto.getStacks();
+//        this.stacks = requestDto.getStacks();
+        this.backEndStack = requestDto.getBackEndStack();
+        this.frontEndStack = requestDto.getFrontEndStack();
         this.frontEndMember = requestDto.getFrontEndMember();
         this.backEndMember = requestDto.getBackEndMember();
     }
