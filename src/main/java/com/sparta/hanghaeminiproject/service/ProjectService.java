@@ -38,7 +38,8 @@ public class ProjectService {
 
 //    전체 프로젝트 조회
     public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
-        List<Project> lists = projectRepository.findAll();
+        List<Project> lists = projectRepository.findAllOrderByModifiedAtDesc();
+//        Collections.sort(lists, Collections.reverseOrder(Comparator.comparing(Project::getModifiedAt)));
         List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>();
         for(Project project : lists){
             projectOneResponseDtos.add(ProjectOneResponseDto.of(project));
