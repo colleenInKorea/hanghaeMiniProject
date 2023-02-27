@@ -34,6 +34,7 @@ public class ProjectService {
 
     private final S3Uploader s3Uploader;
 
+
 //    전체 프로젝트 조회
     public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
         List<Project> lists = projectRepository.findAll();
@@ -44,6 +45,7 @@ public class ProjectService {
 
         return StatusResponseDto.success(projectOneResponseDtos);
     }
+
 
     //프로젝트 생성하기
     public StatusResponseDto<ProjectResponseDto> createdProject( ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails) throws IOException {
@@ -103,10 +105,10 @@ public class ProjectService {
         Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
         if(projectLike.isPresent()){
             projectLikeRepository.deleteById((projectLike.get().getId()));
-            return StatusResponseDto.success("해당 프로젝트에 좋아요가 최소 되었습니다.");
+            return StatusResponseDto.success("해당 프로젝트에 좋아요가 취소 되었습니다.", false);
         }
 
         projectLikeRepository.save(new ProjectLike(project, userDetails.getUser()));
-        return StatusResponseDto.success("해당 프로젝트에 좋아요가 추가 되었습니다.");
+        return StatusResponseDto.success("해당 프로젝트에 좋아요가 추가 되었습니다.", true);
     }
 }
