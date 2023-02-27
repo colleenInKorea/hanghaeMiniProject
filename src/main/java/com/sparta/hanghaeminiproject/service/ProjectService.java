@@ -46,8 +46,8 @@ public class ProjectService {
         return StatusResponseDto.success(projectOneResponseDtos);
     }
 
-
     //프로젝트 생성하기
+    @Transactional
     public StatusResponseDto<ProjectResponseDto> createdProject( ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails) throws IOException {
         String imageUrl = s3Uploader.uploadFiles(projectRequestDto.getMultipartFile(), "images");
         Project project = new Project(projectRequestDto, userDetails.getUser(), imageUrl);
@@ -89,6 +89,7 @@ public class ProjectService {
     }
 
     // 선택 프로젝트 삭제
+    @Transactional
     public StatusResponseDto<String> removeProject(Long projectId, UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         Project project = projectRepository.findById(projectId).orElseThrow(
@@ -104,6 +105,7 @@ public class ProjectService {
     }
 
     //좋아요 만들기
+    @Transactional
     public StatusResponseDto<String> likeProject(Long boardId, UserDetailsImpl userDetails) {
         Project project = projectRepository.findById(boardId).orElseThrow(
                 ()-> new NullPointerException("존재하지 않는 프로젝트입니다.")
