@@ -24,10 +24,10 @@ public class ProjectController {
     private final ProjectService projectService;
 
     //  전체 프로젝트 확인
-    @GetMapping("/project")
-    public StatusResponseDto<List<ProjectOneResponseDto>> getProjects() {
-        return projectService.findProjects();
-    }
+//    @GetMapping("/project")
+//    public StatusResponseDto<List<ProjectOneResponseDto>> getProjects() {
+//        return projectService.findProjects();
+//    }
 
     //  프로젝트 등록
     @PostMapping("/project")
@@ -35,10 +35,12 @@ public class ProjectController {
                                                                 @RequestParam(value = "content") String content,
                                                                 @RequestParam(value = "backEndMember") int backEndMember,
                                                                 @RequestParam(value = "frontEndMember") int frontEndMember,
-                                                                @RequestParam(value = "stacks") List<String> stacks,
+//                                                                @RequestParam(value = "stacks") List<String> stacks,
+                                                                @RequestParam(value = "backEndStack") String backEndStack,
+                                                                @RequestParam(value = "frontEndStack") String frontEndStack,
                                                                 @RequestParam(value = "image") MultipartFile multipartFile,
                                                                 @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
-        ProjectRequestDto projectRequestDto = new ProjectRequestDto(title, content, multipartFile, backEndMember, frontEndMember, stacks);
+        ProjectRequestDto projectRequestDto = new ProjectRequestDto(title, content, multipartFile, backEndMember, frontEndMember, backEndStack, frontEndStack);
         return projectService.createdProject(projectRequestDto, userDetails);
     }
 
@@ -55,10 +57,12 @@ public class ProjectController {
                                                                @RequestParam(value = "content") String content,
                                                                @RequestParam(value = "backEndMember") int backEndMember,
                                                                @RequestParam(value = "frontEndMember") int frontEndMember,
-                                                               @RequestParam(value = "stacks") List<String> stacks,
+//                                                               @RequestParam(value = "stacks") List<String> stacks,
+                                                               @RequestParam(value = "backEndStack") String backEndStack,
+                                                               @RequestParam(value = "frontEndStack") String frontEndStack,
                                                                @RequestParam(value = "image") MultipartFile multipartFile,
                                                                @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
-        ProjectRequestDto requestDto = new ProjectRequestDto(title, content, multipartFile, backEndMember, frontEndMember, stacks);
+        ProjectRequestDto requestDto = new ProjectRequestDto(title, content, multipartFile, backEndMember, frontEndMember, backEndStack, frontEndStack);
         return projectService.updateProject(projectId, requestDto, userDetails);
     }
 

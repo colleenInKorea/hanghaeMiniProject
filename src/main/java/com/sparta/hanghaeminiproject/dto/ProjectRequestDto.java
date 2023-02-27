@@ -24,7 +24,9 @@ public class ProjectRequestDto {
 
     private int frontEndMember;
 
-    private List<String> stacks;
+    //    private List<String> stacks;
+    private String backEndStack;
+    private String frontEndStack;
 
 
 }

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Nodes.collect;
+//import static java.util.stream.Nodes.collect;
 
 @Service
 @RequiredArgsConstructor
@@ -35,15 +35,15 @@ public class ProjectService {
     private final S3Uploader s3Uploader;
 
     //전체 프로젝트 조회
-    public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
-        List<Project> lists = projectRepository.findAll();
-        List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>()
-                .stream()
-                .map(Project project) -> new ProjectOneResponseDto(project))
-                .collect(Collectors.toCollection());
-
-        return StatusResponseDto.success(projectOneResponseDtos);
-    }
+//    public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
+//        List<Project> lists = projectRepository.findAll();
+//        List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>()
+//                .stream()
+//                .map(Project project) -> new ProjectOneResponseDto(project))
+//                .collect(Collectors.toCollection());
+//
+//        return StatusResponseDto.success(projectOneResponseDtos);
+//    }
 
     //프로젝트 생성하기
     public StatusResponseDto<ProjectResponseDto> createdProject( ProjectRequestDto projectRequestDto, UserDetailsImpl userDetails) throws IOException {

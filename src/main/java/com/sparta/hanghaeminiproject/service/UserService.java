@@ -40,7 +40,7 @@ public class UserService {
 
     //로그인
     //    @Transactional(readOnly = true)
-    public ResponseEntity<StatusResponseDto<String>> login(LoginRequestDto loginRequestDto) {
+    public ResponseEntity<StatusResponseDto<User>> login(LoginRequestDto loginRequestDto) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -55,15 +55,16 @@ public class UserService {
         HttpHeaders responseHeaders = new HttpHeaders();
         String token = jwtUtil.createToken(user.getUsername(), user.getRole());
         responseHeaders.set("Authorization",token);
+//        responseHeaders.add("userId", user.getId().toString());
 
         return ResponseEntity.ok()
                 .headers(responseHeaders)
-                .body(StatusResponseDto.success("sucess login!"));
+                .body(StatusResponseDto.success(user));
     }
 
     //회원 정보 수정
     @Transactional
-    public StatusResponseDto<String> update(Long userId, UserRequestDto requestDto, UserDetailsImpl userDetails) {
+    public StatusResponseDto<User> update(Long userId, UserRequestDto requestDto, UserDetailsImpl userDetails) {
         String introduction = requestDto.getIntroduction();
         String part = requestDto.getPart();
 
@@ -74,7 +75,7 @@ public class UserService {
 
         if (user.getRole() == UserRoleEnum.ADMIN || user.getUsername().equals(userDetails.getUser().getUsername())){
             user.update(part, introduction);
-            return StatusResponseDto.success("회원정보 변경 완료");
+            return StatusResponseDto.success(user);
         }else {
             throw new IllegalArgumentException("해당 유저만 수정가능합니다.");
         }
