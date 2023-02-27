@@ -43,7 +43,6 @@ public class ProjectService {
         for(Project project : lists){
             projectOneResponseDtos.add(ProjectOneResponseDto.of(project));
         }
-
         return StatusResponseDto.success(projectOneResponseDtos);
     }
 
