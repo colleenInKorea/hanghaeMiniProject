@@ -59,6 +59,7 @@ public class ProjectService {
         ProjectResponseDto projectResponseDto = new ProjectResponseDto(projectRepository.findById(projectId).orElseThrow(
                 ()-> new IllegalArgumentException("Can not find project")
         ));
+
         return StatusResponseDto.success(projectResponseDto);
     }
 
