@@ -24,10 +24,10 @@ public class ProjectController {
     private final ProjectService projectService;
 
     //  전체 프로젝트 확인
-//    @GetMapping("/project")
-//    public StatusResponseDto<List<ProjectOneResponseDto>> getProjects() {
-//        return projectService.findProjects();
-//    }
+    @GetMapping("/project")
+    public StatusResponseDto<List<ProjectOneResponseDto>> getProjects() {
+        return projectService.findProjects();
+    }
 
     //  프로젝트 등록
     @PostMapping("/project")

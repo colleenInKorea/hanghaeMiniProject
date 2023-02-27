@@ -2,7 +2,12 @@ package com.sparta.hanghaeminiproject.dto;
 
 import com.sparta.hanghaeminiproject.entity.Project;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
 public class ProjectOneResponseDto {
 
     private Long id;
@@ -10,12 +15,14 @@ public class ProjectOneResponseDto {
     private String username;
     private String content;
 
-    @Builder
-    public ProjectOneResponseDto(Project project){
-        this.id = project.getId();
-        this.username = project.getUser().getUsername();
-        this.title = project.getTitle();
-        this.content = project.getContents();
+//    @Builder
+    public static ProjectOneResponseDto of(Project project){
+        return ProjectOneResponseDto.builder()
+                .id(project.getId())
+                .title(project.getTitle())
+                .content(project.getContents())
+                .username(project.getUser().getUsername())
+                .build();
     }
 
 }
