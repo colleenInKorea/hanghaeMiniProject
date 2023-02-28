@@ -17,6 +17,7 @@ public class CommentResponseDto {
     private Long id;
     private String content;
     private String username;
+    private String nickname;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -34,6 +35,7 @@ public class CommentResponseDto {
                 .content(comment.getContent())
                 .username(comment.getUser().getUsername())
                 .createdAt(comment.getCreatedAt())
+                .nickname(comment.getUser().getNickname())
                 .modifiedAt(comment.getModifiedAt())
                 .build();
     }
