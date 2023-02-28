@@ -26,7 +26,7 @@ public class ProjectController {
 
     //  전체 프로젝트 확인
     @GetMapping( "/project")
-    public StatusResponseDto<List<ProjectOneResponseDto>> getProjects() {
+    public List<ProjectOneResponseDto> getProjects() {
         return projectService.findProjects();
     }
 
