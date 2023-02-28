@@ -17,6 +17,8 @@ public class ProjectOneResponseDto {
     private int likeCount;
     private String createdAt;
     private String imageUrl;
+    private int backEndMember;
+    private int frontEndMember;
 
 //    @Builder
     public static ProjectOneResponseDto of(Project project){
@@ -26,6 +28,8 @@ public class ProjectOneResponseDto {
                 .content(project.getContents())
                 .username(project.getUser().getUsername())
                 .imageUrl(project.getImageUrl())
+                .backEndMember(project.getBackEndMember())
+                .frontEndMember(project.getFrontEndMember())
                 .likeCount(project.getLikes().size())
                 .createdAt(project.getCreatedAt().toString())
                 .build();
