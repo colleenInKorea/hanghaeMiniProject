@@ -20,13 +20,6 @@ public class StatusResponseDto<T> {
         return new StatusResponseDto<>(200, result);
     }
 
-
-    // 좋아요 boolean 리턴용
-    public static <T> StatusResponseDto<T> likeSuccess(T result, boolean isLike){
-        return new StatusResponseDto<>(200, result, isLike);
-    }
-
-
     public static <T> StatusResponseDto<T> fail(int statusCode, T result){
         return new StatusResponseDto<>(statusCode, result);
     }

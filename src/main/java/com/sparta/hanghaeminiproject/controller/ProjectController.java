@@ -69,8 +69,8 @@ public class ProjectController {
         return projectService.removeProject(projectId, userDetails);
     }
 
-    @PostMapping("/project/like/{boardId}")
-    public StatusResponseDto<IsLikeResponseDto> likeProject(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return projectService.likeProject(boardId, userDetails);
+    @PostMapping("/project/like/{projectId}")
+    public StatusResponseDto<IsLikeResponseDto> likeProject(@PathVariable Long projectId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return projectService.likeProject(projectId, userDetails);
     }
 }

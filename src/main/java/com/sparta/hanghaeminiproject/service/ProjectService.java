@@ -104,8 +104,8 @@ public class ProjectService {
 
     //좋아요 만들기
     @Transactional
-    public StatusResponseDto<IsLikeResponseDto> likeProject(Long boardId, UserDetailsImpl userDetails) {
-        Project project = projectRepository.findById(boardId).orElseThrow(
+    public StatusResponseDto<IsLikeResponseDto> likeProject(Long projectId, UserDetailsImpl userDetails) {
+        Project project = projectRepository.findById(projectId).orElseThrow(
                 ()-> new NullPointerException("존재하지 않는 프로젝트입니다.")
         );
 
