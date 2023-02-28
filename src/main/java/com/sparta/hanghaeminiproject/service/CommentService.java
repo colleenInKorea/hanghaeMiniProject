@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,6 +61,15 @@ public class CommentService {
         } else {
             throw new IllegalArgumentException("작성자만 수정이 가능합니다.");
         }
+    }
+
+    public StatusResponseDto<List<CommentResponseDto>> getComments(Long projectId){
+        List<Comment> list = commentRepository.findAllByProjectId(projectId);
+        List<CommentResponseDto> responseDtos = new ArrayList<>();
+        for(Comment comment : list){
+            responseDtos.add(CommentResponseDto.from(comment));
+        }
+        return StatusResponseDto.success(responseDtos);
     }
 
 //    public StatusResponseDto<String> likeComment(Long id, UserDetailsImpl userDetails) {

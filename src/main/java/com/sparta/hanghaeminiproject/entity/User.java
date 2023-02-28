@@ -50,8 +50,9 @@ public class User{
         role = requestDto.isAdminCheck() ? UserRoleEnum.ADMIN : UserRoleEnum.USER;
     }
 
-    public void update(String part, String introduction) {
+    public void update(String part, String introduction, String nickname) {
         this.introduction = introduction;
         this.part = part;
+        this.nickname = nickname;
     }
 }

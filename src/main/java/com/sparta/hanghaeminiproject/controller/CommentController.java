@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -31,6 +33,11 @@ public class CommentController {
     @DeleteMapping("/comment/{id}")
     public StatusResponseDto<String> deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return commentService.deleteComment(id, userDetails);
+    }
+
+    @GetMapping("/comment/{projectId}")
+    public StatusResponseDto<List<CommentResponseDto>> getComments(@PathVariable Long projectId){
+        return commentService.getComments(projectId);
     }
 
 //    @PostMapping("/comment/like/{id}")

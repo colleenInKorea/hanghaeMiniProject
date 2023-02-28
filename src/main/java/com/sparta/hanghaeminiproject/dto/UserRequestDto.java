@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class UserRequestDto {
 
+    private String nickname;
     private String introduction;
-
     private String part;
 
 }

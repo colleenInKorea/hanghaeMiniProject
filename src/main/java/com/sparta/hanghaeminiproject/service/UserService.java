@@ -67,6 +67,7 @@ public class UserService {
     public StatusResponseDto<User> update(Long userId, UserRequestDto requestDto, UserDetailsImpl userDetails) {
         String introduction = requestDto.getIntroduction();
         String part = requestDto.getPart();
+        String nickname = requestDto.getNickname();
 
         //check user info
         User user = userRepository.findById(userId).orElseThrow(
@@ -74,7 +75,7 @@ public class UserService {
         );
 
         if (user.getRole() == UserRoleEnum.ADMIN || user.getUsername().equals(userDetails.getUser().getUsername())){
-            user.update(part, introduction);
+            user.update(part, introduction, nickname);
             return StatusResponseDto.success(user);
         }else {
             throw new IllegalArgumentException("해당 유저만 수정가능합니다.");
