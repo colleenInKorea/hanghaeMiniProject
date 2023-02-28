@@ -1,9 +1,6 @@
 package com.sparta.hanghaeminiproject.service;
 
-import com.sparta.hanghaeminiproject.dto.ProjectOneResponseDto;
-import com.sparta.hanghaeminiproject.dto.ProjectRequestDto;
-import com.sparta.hanghaeminiproject.dto.ProjectResponseDto;
-import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
+import com.sparta.hanghaeminiproject.dto.*;
 import com.sparta.hanghaeminiproject.entity.Project;
 import com.sparta.hanghaeminiproject.entity.ProjectLike;
 import com.sparta.hanghaeminiproject.entity.User;
@@ -38,7 +35,7 @@ public class ProjectService {
 
 //    전체 프로젝트 조회
     public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
-        List<Project> lists = projectRepository.findAllOrderByModifiedAtDesc();
+        List<Project> lists = projectRepository.findAllByOrderByModifiedAtDesc();
 //        Collections.sort(lists, Collections.reverseOrder(Comparator.comparing(Project::getModifiedAt)));
         List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>();
         for(Project project : lists){
@@ -58,8 +55,9 @@ public class ProjectService {
     }
 
     //선택 프로젝트 조회
-    public StatusResponseDto<ProjectResponseDto> findProject(Long projectId, UserDetailsImpl userDetails){
-        ProjectResponseDto projectResponseDto = new ProjectResponseDto(projectRepository.findById(projectId).orElseThrow(
+    public StatusResponseDto<ProjectAddisLikeResonseDto> findProject(Long projectId, UserDetailsImpl userDetails){
+        ProjectResponseDto
+                projectResponseDto = new ProjectResponseDto(projectRepository.findById(projectId).orElseThrow(
                 ()-> new IllegalArgumentException("Can not find project")
         ));
         Project project = projectRepository.findById(projectId).orElseThrow(
@@ -68,9 +66,10 @@ public class ProjectService {
         Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
 
         if(projectLike.isPresent()){
-            return StatusResponseDto.success(projectResponseDto, true) ;
+            return StatusResponseDto.success(new ProjectAddisLikeResonseDto(projectResponseDto, true)) ;
         }
-        return StatusResponseDto.success(projectResponseDto, false);
+        return StatusResponseDto.success(new ProjectAddisLikeResonseDto(projectResponseDto, false));
+
     }
 
     //선택 프로젝트 수정
@@ -107,7 +106,7 @@ public class ProjectService {
 
     //좋아요 만들기
     @Transactional
-    public StatusResponseDto<String> likeProject(Long boardId, UserDetailsImpl userDetails) {
+    public StatusResponseDto<IsLikeResponseDto> likeProject(Long boardId, UserDetailsImpl userDetails) {
         Project project = projectRepository.findById(boardId).orElseThrow(
                 ()-> new NullPointerException("존재하지 않는 프로젝트입니다.")
         );
@@ -115,10 +114,10 @@ public class ProjectService {
         Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
         if(projectLike.isPresent()){
             projectLikeRepository.deleteById((projectLike.get().getId()));
-            return StatusResponseDto.success("해당 프로젝트에 좋아요가 취소 되었습니다.", false);
+            return StatusResponseDto.success(new IsLikeResponseDto("해당 프로젝트에 좋아요가 취소 되었습니다.", false));
         }
 
         projectLikeRepository.save(new ProjectLike(project, userDetails.getUser()));
-        return StatusResponseDto.success("해당 프로젝트에 좋아요가 추가 되었습니다.", true);
+        return StatusResponseDto.success(new IsLikeResponseDto("해당 프로젝트에 좋아요가 추가 되었습니다.", true));
     }
 }

@@ -1,12 +1,8 @@
 package com.sparta.hanghaeminiproject.controller;
 
-import com.sparta.hanghaeminiproject.dto.ProjectOneResponseDto;
-import com.sparta.hanghaeminiproject.dto.ProjectRequestDto;
-import com.sparta.hanghaeminiproject.dto.ProjectResponseDto;
-import com.sparta.hanghaeminiproject.dto.StatusResponseDto;
+import com.sparta.hanghaeminiproject.dto.*;
 import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import com.sparta.hanghaeminiproject.service.ProjectService;
-import com.sparta.hanghaeminiproject.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +42,7 @@ public class ProjectController {
 
     //선택 프로젝트 확인
     @GetMapping("/project/{projectId}")
-    public StatusResponseDto<ProjectResponseDto> getProject(@PathVariable Long projectId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public StatusResponseDto<ProjectAddisLikeResonseDto> getProject(@PathVariable Long projectId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return projectService.findProject(projectId, userDetails);
     }
 
@@ -73,7 +69,7 @@ public class ProjectController {
     }
 
     @PostMapping("/project/like/{boardId}")
-    public StatusResponseDto<String> likeProject(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public StatusResponseDto<IsLikeResponseDto> likeProject(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return projectService.likeProject(boardId, userDetails);
     }
 }
