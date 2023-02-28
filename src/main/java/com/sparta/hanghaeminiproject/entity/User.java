@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -14,7 +16,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity(name = "users")
 @ToString
-public class User {
+
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
