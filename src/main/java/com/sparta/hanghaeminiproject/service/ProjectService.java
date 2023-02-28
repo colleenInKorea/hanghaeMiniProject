@@ -15,9 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //import static java.util.stream.Nodes.collect;
@@ -34,14 +32,14 @@ public class ProjectService {
 
 
 //    전체 프로젝트 조회
-    public StatusResponseDto<List<ProjectOneResponseDto>> findProjects(){
+
+    public List<ProjectOneResponseDto> findProjects(){
         List<Project> lists = projectRepository.findAllByOrderByModifiedAtDesc();
-//        Collections.sort(lists, Collections.reverseOrder(Comparator.comparing(Project::getModifiedAt)));
         List<ProjectOneResponseDto> projectOneResponseDtos = new ArrayList<>();
         for(Project project : lists){
             projectOneResponseDtos.add(ProjectOneResponseDto.of(project));
         }
-        return StatusResponseDto.success(projectOneResponseDtos);
+        return projectOneResponseDtos;
     }
 
     //프로젝트 생성하기
@@ -66,10 +64,10 @@ public class ProjectService {
         Optional<ProjectLike> projectLike = projectLikeRepository.findByProjectAndUser(project, userDetails.getUser());
 
         if(projectLike.isPresent()){
+
             return StatusResponseDto.success(new ProjectAddisLikeResonseDto(projectResponseDto, true)) ;
         }
         return StatusResponseDto.success(new ProjectAddisLikeResonseDto(projectResponseDto, false));
-
     }
 
     //선택 프로젝트 수정

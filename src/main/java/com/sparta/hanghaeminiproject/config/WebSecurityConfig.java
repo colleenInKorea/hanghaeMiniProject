@@ -29,10 +29,11 @@ import java.awt.desktop.UserSessionListener;
 @RequiredArgsConstructor
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
 @EnableGlobalMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
-public class WebSecurityConfig  {
+public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
-//    private final Users users;
+    //    private final Users users;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -58,7 +59,7 @@ public class WebSecurityConfig  {
 
         http.authorizeRequests().antMatchers("/api/user/**").permitAll()
                 .antMatchers("**/project/**").permitAll()
-//              .antMatchers("/api/shop").permitAll()
+                .antMatchers("**/comment/**").permitAll()
                 .anyRequest().authenticated()
                 // JWT 인증/인가를 사용하기 위한 설정
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);

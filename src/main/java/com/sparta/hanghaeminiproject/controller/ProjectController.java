@@ -5,6 +5,7 @@ import com.sparta.hanghaeminiproject.security.UserDetailsImpl;
 import com.sparta.hanghaeminiproject.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +21,8 @@ public class ProjectController {
     private final ProjectService projectService;
 
     //  전체 프로젝트 확인
-    @GetMapping("/project")
-    public StatusResponseDto<List<ProjectOneResponseDto>> getProjects() {
+    @GetMapping( "/project")
+    public List<ProjectOneResponseDto> getProjects() {
         return projectService.findProjects();
     }
 
@@ -29,8 +30,8 @@ public class ProjectController {
     @PostMapping("/project")
     public StatusResponseDto<ProjectResponseDto> createdProject(@RequestParam(value = "title") String title,
                                                                 @RequestParam(value = "content") String content,
-                                                                @RequestParam(value = "backEndMember") int backEndMember,
-                                                                @RequestParam(value = "frontEndMember") int frontEndMember,
+                                                                @RequestParam(value = "backEndMember", required = false) int backEndMember,
+                                                                @RequestParam(value = "frontEndMember", required = false) int frontEndMember,
 //                                                                @RequestParam(value = "stacks") List<String> stacks,
                                                                 @RequestParam(value = "backEndStack") String backEndStack,
                                                                 @RequestParam(value = "frontEndStack") String frontEndStack,
@@ -51,8 +52,8 @@ public class ProjectController {
     public StatusResponseDto<ProjectResponseDto> updateProject(@PathVariable Long projectId,
                                                                @RequestParam(value = "title") String title,
                                                                @RequestParam(value = "content") String content,
-                                                               @RequestParam(value = "backEndMember") int backEndMember,
-                                                               @RequestParam(value = "frontEndMember") int frontEndMember,
+                                                               @RequestParam(value = "backEndMember", required = false) int backEndMember,
+                                                               @RequestParam(value = "frontEndMember", required = false) int frontEndMember,
 //                                                               @RequestParam(value = "stacks") List<String> stacks,
                                                                @RequestParam(value = "backEndStack") String backEndStack,
                                                                @RequestParam(value = "frontEndStack") String frontEndStack,
