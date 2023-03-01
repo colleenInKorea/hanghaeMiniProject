@@ -3,6 +3,7 @@ package com.sparta.hanghaeminiproject.dto;
 import com.sparta.hanghaeminiproject.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class UserResponseDto {
@@ -18,7 +19,7 @@ public class UserResponseDto {
     private String introduction;
 
     @Builder
-    public UserResponseDto(User user){
+    public UserResponseDto(User user) {
         this.id = user.getId();
         this.nickname = user.getNickname();
         this.username = user.getUsername();

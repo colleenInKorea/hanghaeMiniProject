@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
@@ -41,6 +42,12 @@ public class UserController {
     @GetMapping ("/{userId}")
     public StatusResponseDto<UserResponseDto> getUserInfo(@PathVariable Long userId){
         return userService.getUserInfo(userId);
+    }
+
+    @ResponseBody
+    @GetMapping("/")
+    public List<UserOneResponseDto> getUsers(){
+        return userService.getUsers();
     }
 
 
