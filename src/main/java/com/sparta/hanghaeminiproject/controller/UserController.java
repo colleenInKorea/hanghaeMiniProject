@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/")
+    @GetMapping("/info")
     public List<UserOneResponseDto> getUsers(){
         return userService.getUsers();
     }
