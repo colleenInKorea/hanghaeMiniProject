@@ -32,8 +32,6 @@ import java.awt.desktop.UserSessionListener;
 public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
-    //    private final Users users;
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -44,7 +42,6 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         // h2-console 사용 및 resources 접근 허용 설정
         return (web) -> web.ignoring()
-//                .requestMatchers(PathRequest.)
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 

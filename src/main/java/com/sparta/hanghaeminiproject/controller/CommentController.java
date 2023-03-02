@@ -39,10 +39,4 @@ public class CommentController {
     public StatusResponseDto<List<CommentResponseDto>> getComments(@PathVariable Long projectId){
         return commentService.getComments(projectId);
     }
-
-//    @PostMapping("/comment/like/{id}")
-//    public StatusResponseDto<String> likeComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-//        return commentService.likeComment(id, userDetails);
-//    }
-
 }

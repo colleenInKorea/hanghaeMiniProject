@@ -34,35 +34,17 @@ public class Project extends Timestamped {
 
     @Column(nullable = true)
     private String imageUrl;
-
-//    @Column(nullable = false)
-//    List<String> stacks = new ArrayList<>();
-
     @Column(nullable = true)
     private int backEndMember;
 
     @Column(nullable = true)
     private int frontEndMember;
-
-//    @ElementCollection
-//    @CollectionTable(name = "project_stacks",
-//        joinColumns = @JoinColumn(name = "project_id"))
-//    @Column(name = "stack_name")
-//    List<String> stacks = new ArrayList<>();
-
     private String backEndStack;
     private String frontEndStack;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    //    @JoinTable(
-//            name = "comments",
-//            joinColumns = @JoinColumn(name = "project_id"),
-//            inverseJoinColumns = @JoinColumn(name = "")
-//    )
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("createdAt desc")
     List<Comment> commentList = new ArrayList<>();

@@ -20,7 +20,6 @@ public class ProjectOneResponseDto {
     private int backEndMember;
     private int frontEndMember;
 
-//    @Builder
     public static ProjectOneResponseDto of(Project project){
         return ProjectOneResponseDto.builder()
                 .id(project.getId())

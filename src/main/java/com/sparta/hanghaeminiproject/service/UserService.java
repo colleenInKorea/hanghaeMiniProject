@@ -57,7 +57,6 @@ public class UserService {
         HttpHeaders responseHeaders = new HttpHeaders();
         String token = jwtUtil.createToken(user.getUsername(), user.getRole());
         responseHeaders.set("Authorization",token);
-//        responseHeaders.add("userId", user.getId().toString());
 
         return ResponseEntity.ok()
                 .headers(responseHeaders)

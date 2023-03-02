@@ -14,10 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +23,6 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final ProjectRepository projectRepository;
-//    private final CommentLikeRepository commentLikeRepository;
 
     @Transactional
     public StatusResponseDto<CommentResponseDto> createComment(Long id, String content, UserDetailsImpl userDetails) {
@@ -71,15 +68,4 @@ public class CommentService {
         }
         return StatusResponseDto.success(responseDtos);
     }
-
-//    public StatusResponseDto<String> likeComment(Long id, UserDetailsImpl userDetails) {
-//        Comment comment = commentRepository.findById(id).orElseThrow(() -> new NullPointerException("존재하지 않는 댓글"));
-//        Optional<CommentLike> optionalCommentLike = commentLikeRepository.findByCommentAndUser(comment, userDetails.getUser());
-//        if (optionalCommentLike.isPresent()) { // 유저가 이미 좋아요를 눌렀을 때
-//            commentLikeRepository.deleteById(optionalCommentLike.get().getId());
-//            return StatusResponseDto.success("댓글 좋아요 취소");
-//        }
-//        commentLikeRepository.save(new CommentLike(comment, userDetails.getUser()));
-//        return StatusResponseDto.success("댓글 좋아요 성공");
-//    }
 }
