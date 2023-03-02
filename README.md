@@ -1,10 +1,10 @@
 # DevMatch
-## 기획의도 :펼쳐진_책:
+## 기획의도 
 우리가 간단한 프로젝트를 만들어도 같이 만들 사람들을 찾아야하는 어려움이 있습니다.
 이를 용이하게 만들 웹프로젝트를 생각하게 되었습니다.
 내가 할 수 있는 스택을 보고, 매력적인 프로젝트를 찾아
 새로운 사람들과 만남을 시도해 보세요!
-## 기간 :자명종_시계:
+## 기간 
 ```js
 2023.02.23 ~ 23.03.02 7
 ```
@@ -33,7 +33,7 @@
 - js-cookie
 - react-icons
 - browser-image-compression
-### 백엔드 스택 :망치와_렌치:
+### 백엔드 스택 
 <div>
 <img src="https://img.shields.io/badge/Java-cd0000?style=for-the-badge&logo=&logoColor=white">
 <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
@@ -49,7 +49,7 @@ CRUD
 내 정보 수정 기능
 ## :클립보드:**API 명세**
 [https://www.notion.so/34640368f3e040e19c1b01f5800236c4?v=589cc8e44312476a82cb825647504ceb](https://www.notion.so/34640368f3e040e19c1b01f5800236c4?v=589cc8e44312476a82cb825647504ceb)
-## 트러블 슈팅 :축구공:️
+## 트러블 슈팅
 ## FE
 ### API 명세서 오류로 인한 FormData Posting 오류
 ### 데이터 타입 오류
