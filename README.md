@@ -25,7 +25,7 @@
 ### Deatil.page
 ![image (4)](https://user-images.githubusercontent.com/95469708/222407232-fe8755d3-733f-4409-a55c-3dca7ba58f27.png)
 ## 스택
-### 프론트엔드 스택 :망치와_렌치:
+### 프론트엔드 스택 
 ![](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)  ![](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white) ![](https://camo.githubusercontent.com/7528aeb46d42b9f649b4e10f9356b5efee80ed7bcc19e32b6fba9d476a3c0a23/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f726561637471756572792d4646343135343f7374796c653d666f722d7468652d6261646765266c6f676f3d72656163747175657279266c6f676f436f6c6f723d7768697465) ![](https://camo.githubusercontent.com/fd0243cd3a19485c4f3e82eba48aa53c2b13c41bd87164fc77fa3498ec09d2bd/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f616d617a6f6e73332d3536394133313f7374796c653d666f722d7468652d6261646765266c6f676f3d616d617a6f6e7333266c6f676f436f6c6f723d7768697465)
 ### 프론트엔드 라이브러리
 ![](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white)![](https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white)
